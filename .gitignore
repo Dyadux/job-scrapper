@@ -3,3 +3,10 @@
 __pycache__/
 *.pyc
 .DS_Store
+myenv/
+*.json
+*.txt
+*.png
+*.jpg
+*.jpeg
+.DS_Store

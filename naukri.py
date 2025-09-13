@@ -2,9 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from webdriver_manager.firefox import GeckoDriverManager
 import time
 import os
 
@@ -24,19 +25,17 @@ class NaukriLogin:
         self.driver = None
         self.wait = None
 
-        # Chrome options
-        chrome_options = Options()
+        # Firefox options
+        firefox_options = Options()
         if headless:
-            chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        chrome_options.add_experimental_option('useAutomationExtension', False)
-
+            firefox_options.add_argument("--headless")
+        # Firefox doesn't use Chrome-specific arguments, so we remove them
+        # Firefox options are different from Chrome options
+        
         # Initialize the driver
-        # Note: Make sure you have chromedriver installed or use webdriver-manager
-        self.driver = webdriver.Chrome(options=chrome_options)
+        # Use webdriver-manager to automatically handle geckodriver
+        service = Service(GeckoDriverManager().install())
+        self.driver = webdriver.Firefox(service=service, options=firefox_options)
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self.wait = WebDriverWait(self.driver, 10)
 

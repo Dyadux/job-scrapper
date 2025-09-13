@@ -14,12 +14,11 @@ class NaukriJobScraperGUI:
         self.root.geometry("800x700")
         self.root.resizable(True, True)
         
-        # Configure style
         style = ttk.Style()
         style.theme_use('clam')
 
         try:
-            icon = Image.open("logo-2.png").resize((128, 128))   # Resize for taskbar
+            icon = Image.open("logo-2.png").resize((128, 128))
             self.icon_tk = ImageTk.PhotoImage(icon)
             self.root.iconphoto(True, self.icon_tk)
         except Exception as e:
